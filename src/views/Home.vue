@@ -1,18 +1,23 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div>
+    <v-btn color="primary" to="/camera" class="take-picture-button" fab>
+      <v-icon>mdi-camera</v-icon>
+    </v-btn>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
 export default {
-  name: "Home",
-  components: {
-    HelloWorld
-  }
-};
+  name: 'Home',
+  components: {}
+}
 </script>
+
+<style scoped>
+.take-picture-button {
+  position: fixed;
+  right: 24px;
+  bottom: 90px;
+  z-index: 5;
+}
+</style>
