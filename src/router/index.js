@@ -12,6 +12,9 @@ const routes = [
   {
     path: '/camera',
     name: 'Camera',
+    meta: {
+      hideNav: true
+    },
     component: () => import('../views/Camera.vue')
   },
   {

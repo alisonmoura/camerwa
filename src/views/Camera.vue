@@ -1,21 +1,47 @@
 <template>
   <div class="camera-modal">
+    <v-app-bar app color="primary" dark>
+      <!-- <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon> -->
+      <span class="title">{{ $route.name }}</span>
+      <v-spacer></v-spacer>
+      <v-btn @click="takePhoto" text>Take Foto</v-btn>
+    </v-app-bar>
     <video ref="video" class="camera-stream" />
   </div>
 </template>
 
 <script>
 export default {
+  data: () => ({
+    track: undefined
+  }),
+  methods: {
+    async takePhoto() {
+      const blob = await new ImageCapture(this.track).takePhoto()
+      this.$store.dispatch('setPhotoBlob', blob)
+      this.track.stop()
+      this.$router.push('/')
+    }
+  },
   mounted() {
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
       .then(mediaStream => {
+        this.track = mediaStream.getVideoTracks()[0]
         this.$refs.video.srcObject = mediaStream
-        this.$refs.video.play()
+        try {
+          this.$refs.video.play()
+        } catch (error) {
+          console.error('getUserMedia() error:', error)
+          alert(`getUserMedia() error:' ${error}`)
+          // alert("Sorry, we couldn't access your camera")
+        }
       })
       .catch(error => {
         console.error('getUserMedia() error:', error)
-        alert("Sorry, we couldn't access your camera")})
+        alert(`getUserMedia() error:' ${error}`)
+        // alert("Sorry, we couldn't access your camera")
+      })
   }
 }
 </script>
