@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 
 import { register } from 'register-service-worker'
+import Store from './store'
 
 if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
@@ -21,6 +22,18 @@ if (process.env.NODE_ENV === 'production') {
     },
     updated() {
       console.log('New content is available; please refresh.')
+      Store.dispatch('showAlert', {
+        alertTitle: 'New Version',
+        alertMessage:
+          'A new version of the app is available, do you want to install it?',
+        alertYesAction: () => {
+          console.log('Sad yes!')
+          window.location.reload()
+        },
+        alertNoAction: () => {
+          console.log('Sad no!')
+        }
+      })
     },
     offline() {
       console.log(

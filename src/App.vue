@@ -11,6 +11,20 @@
 
     <v-main>
       <router-view></router-view>
+      <v-dialog v-model="$store.state.alertShow">
+        <v-card>
+          <v-card-title>{{ $store.state.alertTitle }}</v-card-title>
+          <v-card-text>{{ $store.state.alertMessage }}</v-card-text>
+        </v-card>
+        <v-card-action>
+          <v-btn v-if="$store.state.alertYesAction" color="primary" text
+            >Yes</v-btn
+          >
+          <v-btn v-if="$store.state.alertNoAction" color="danger lighten-1" text
+            >No</v-btn
+          >
+        </v-card-action>
+      </v-dialog>
     </v-main>
   </v-app>
 </template>
