@@ -24,6 +24,11 @@ export default {
     }
   },
   mounted() {
+    navigator.getUserMedia =
+      navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia
+
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
       .then(mediaStream => {
